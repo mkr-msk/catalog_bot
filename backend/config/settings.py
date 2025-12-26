@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     
-    # Local apps (добавим позже)
+    # Local apps
+    'catalog',  
 ]
 
 MIDDLEWARE = [
