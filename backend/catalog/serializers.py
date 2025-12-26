@@ -27,6 +27,7 @@ class ProductListSerializer(serializers.ModelSerializer):
 class ProductDetailSerializer(serializers.ModelSerializer):
     """Полный сериализатор для детальной информации о товаре"""
     category_name = serializers.CharField(source='category.name', read_only=True)
+    category_id = serializers.IntegerField(source='category.id', read_only=True)
     
     class Meta:
         model = Product
@@ -35,6 +36,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'name', 
             'description', 
             'price', 
+            'category_id',
             'category_name',
             'telegram_file_id',
             'image'

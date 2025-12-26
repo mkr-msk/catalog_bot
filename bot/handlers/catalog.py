@@ -70,9 +70,7 @@ async def show_product_detail(callback: CallbackQuery):
         f"💰 Цена: {product['price']} ₽"
     )
     
-    # Достаём category_id из продукта (нужно будет добавить в serializer)
-    # Пока хардкод для работы кнопки "назад"
-    category_id = 1  # TODO: получать из API
+    category_id = product['category_id']
     
     if product.get('telegram_file_id'):
         await callback.message.delete()
