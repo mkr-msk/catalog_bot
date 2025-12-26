@@ -44,3 +44,44 @@ class ProductAdmin(admin.ModelAdmin):
         return "Нет изображения"
     
     image_preview.short_description = 'Превью'
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = [
+        'id', 
+        'customer_name', 
+        'customer_phone', 
+        'product', 
+        'status', 
+        'created_at'
+    ]
+    list_filter = ['status', 'created_at']
+    search_fields = [
+        'customer_name', 
+        'customer_phone', 
+        'customer_username',
+        'comment'
+    ]
+    list_editable = ['status']
+    ordering = ['-created_at']
+    
+    fieldsets = (
+        ('Информация о клиенте', {
+            'fields': (
+                'customer_name', 
+                'customer_phone',
+                'customer_telegram_id',
+                'customer_username'
+            )
+        }),
+        ('Детали заявки', {
+            'fields': ('product', 'comment', 'status')
+        }),
+        ('Служебная информация', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    readonly_fields = ['created_at', 'updated_at']
