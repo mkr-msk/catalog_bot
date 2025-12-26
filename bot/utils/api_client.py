@@ -9,14 +9,16 @@ class APIClient:
     async def get_categories(self):
         async with aiohttp.ClientSession() as session:
             async with session.get(f'{self.base_url}/categories/') as resp:
-                return await resp.json()
+                data = await resp.json()
+                return data.get('results', data) if isinstance(data, dict) else data
     
     async def get_products_by_category(self, category_id: int):
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 f'{self.base_url}/products/by-category/{category_id}/'
             ) as resp:
-                return await resp.json()
+                data = await resp.json()
+                return data.get('results', data) if isinstance(data, dict) else data
     
     async def get_product(self, product_id: int):
         async with aiohttp.ClientSession() as session:
