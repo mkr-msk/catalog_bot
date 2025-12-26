@@ -1,22 +1,25 @@
 import asyncio
 import logging
-import os
-from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher
-
-load_dotenv()
+from aiogram.fsm.storage.memory import MemoryStorage
+from config import BOT_TOKEN
+from handlers import catalog, orders
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 async def main():
     bot = Bot(token=BOT_TOKEN)
-    dp = Dispatcher()
+    storage = MemoryStorage()
+    dp = Dispatcher(storage=storage)
+    
+    dp.include_router(catalog.router)
+    dp.include_router(orders.router)
     
     logger.info("Бот запущен")
     await dp.start_polling(bot)
+
 
 if __name__ == '__main__':
     asyncio.run(main())
